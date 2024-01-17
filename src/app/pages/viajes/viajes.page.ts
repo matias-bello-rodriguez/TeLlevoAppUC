@@ -1,32 +1,39 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { NombreDelModalComponent } from 'src/app/components/detalle-viaje/detalle-viaje.component';
+import { Viaje } from 'src/app/viaje-interface';
+
 @Component({
   selector: 'app-viajes',
   templateUrl: './viajes.page.html',
   styleUrls: ['./viajes.page.scss'],
 })
 export class ViajesPage implements OnInit {
+  viajes!: Observable<Viaje[]>;
 
-  constructor(private modalController: ModalController) { }
+  constructor(private firestore: AngularFirestore, private modalController: ModalController) {}
 
   ngOnInit() {
-    console.log("hola");
+    this.viajes = this.firestore.collection<Viaje>('viajes').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Viaje;
+        const id = a.payload.doc.id;
+        return { id, ...data }; // Combina el id con los datos del viaje
+      }))
+    );
   }
 
-  async abrirDetalle(conductor: string, destino: string, horaSalida: string, pasajerosActuales: number, pasajerosMaximos: number, tarifa: number) {
+  async abrirModal(viaje: Viaje) {
     const modal = await this.modalController.create({
       component: NombreDelModalComponent,
       componentProps: {
-        conductor,
-        destino,
-        horaSalida,
-        pasajerosActuales,
-        pasajerosMaximos,
-        tarifa
+        viaje: viaje, // viaje ahora incluye el id
+        viajeId: viaje.id // Pasa el id del viaje
       }
     });
-
-    await modal.present();
+    return await modal.present();
   }
 }

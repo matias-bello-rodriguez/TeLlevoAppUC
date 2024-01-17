@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router'; // Importar Router
+import { AlertController } from '@ionic/angular';
 import { RegistroUsuario } from 'src/app/interface';
 import { UserDataService } from 'src/app/user-data.service';
 
@@ -19,43 +21,48 @@ export class LoginPage implements OnInit {
     address: '',
     password: '',
     confirmPassword: '',
-    userType: 'pasajero', // O 'conductor', según tu lógica de negocio
+    patente : '', // O 'conductor', según tu lógica de negocio
   };
 
-  constructor(private router: Router, private userDataService: UserDataService) { } // Inyecta el servicio aquí
+  constructor(private router: Router, private userDataService: UserDataService, 
+    private afAuth:AngularFireAuth, private alertController:AlertController) { } // Inyecta el servicio aquí
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log("gkr");
+
   }
 
-  iniciarSesion() {
-    const usuarioAlmacenado = localStorage.getItem(this.registroUsuario.email);
-    if (usuarioAlmacenado) {
-      const datosUsuario = JSON.parse(usuarioAlmacenado);
-      if (datosUsuario.password === this.registroUsuario.password) {
-        console.log("Inicio de sesión exitoso");
+  async iniciarSesion() {
+    try {
+      const result = await this.afAuth.signInWithEmailAndPassword(this.registroUsuario.email, this.registroUsuario.password);
+      console.log('Inicio de sesión exitoso', result);
+      console.log(this.registroUsuario)
 
-        // Almacena los datos del usuario en el servicio
-        this.userDataService.setUserData(datosUsuario);
+      // Opcional: Almacena los datos del usuario en UserDataService
+      // this.userDataService.setUserData(result.user);
 
-        // Redirige al usuario a la página de perfil o home
-        this.router.navigateByUrl('/viajes');
-      } else {
-        console.log("Contraseña incorrecta");
-      }
-    } else {
-      console.log("Usuario no encontrado");
+      // Redirige al usuario a la página de perfil o home
+      this.router.navigateByUrl('/viajes');
+    } catch (error) {
+      const firebaseError = error as { message: string };
+      console.error('Error en el inicio de sesión:', firebaseError.message);
+      this.mostrarAlerta('Error en el inicio de sesión: ' + firebaseError.message);
     }
   }
 
-  navegarARegistro() {
-    this.router.navigateByUrl('/register');
-  }
-  irARegistro(): void {
-    // Redirige a la página de registro
-    this.router.navigate(['/register']);
+  olvidasteContrasenaClicked() {
+    // Navegar a la página de recuperación de contraseña
+    this.router.navigate(['/recuperar-contrasena']);
   }
 
+  async mostrarAlerta(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: 'Inicio de Sesión',
+      message: mensaje,
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
 
 }

@@ -18,6 +18,7 @@ export class AppComponent {
     { title: 'Reservar viaje', url: '/viajes', icon: 'car' },
     { title: 'Crear viaje', url: '/crear-viaje', icon: 'bus' },
     { title: 'Perfil', url: '/mi-perfil', icon: 'person' },
+    { title: 'Viaje actual', url: '/viaje-actual', icon: 'location-sharp-icon' },
     { title: 'Cerrar sesión', url: '/login', icon: 'log-out-outline', action: 'logout' },
     // Otros ítems del menú...
   ];

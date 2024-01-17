@@ -5,7 +5,7 @@
     <title>Formulario de Registro</title>
     
 </head>
-<body>
+
     
 <ion-header>
     <ion-toolbar>
@@ -15,45 +15,41 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<body>
-   <br>
-    <br>
-    <br>
-    <br>
-    <form (ngSubmit)="onSubmit()">
-        
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" [(ngModel)]="registroUsuario.email" required><br>
 
-        <label for="phone">Teléfono:</label><br>
-        <input type="tel" id="phone" name="phone" [(ngModel)]="registroUsuario.phone" required><br>
-
-        <label for="firstName">Nombre:</label><br>
-        <input type="text" id="firstName" name="firstName" [(ngModel)]="registroUsuario.firstName" required><br>
-
-        <label for="lastName">Apellido:</label><br>
-        <input type="text" id="lastName" name="lastName" [(ngModel)]="registroUsuario.lastName" required><br>
-
-        <label for="address">Dirección:</label><br>
-        <input type="text" id="address" name="address" [(ngModel)]="registroUsuario.address" required><br>
-
-        <label for="password">Contraseña:</label><br>
-        <input type="password" id="password" name="password" [(ngModel)]="registroUsuario.password" required autocomplete="new-password"><br>
-
-        <label for="confirmPassword">Confirmar Contraseña:</label><br>
-        <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="registroUsuario.confirmPassword" required autocomplete="new-password"><br>
-
-        <p>Tipo de Usuario:</p>
-        <input type="radio" id="driver" name="userType" value="conductor" [(ngModel)]="registroUsuario.userType" required>
-        <label for="driver">Conductor</label><br>
-        <input type="radio" id="passenger" name="userType" value="pasajero" [(ngModel)]="registroUsuario.userType" required>
-        <label for="passenger">Pasajero</label><br>
-
-        <input type="submit" value="Registrar">
-        
-    </form>
-
+<ion-content>
+   <ion-card>
+        <form (ngSubmit)="onSubmit()">
+            
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" [(ngModel)]="registroUsuario.email" required><br>
     
-    <a href="javascript:history.back()" class="back-button">Volver</a>
-</body>
-
+            <label for="phone">Teléfono:</label><br>
+            <input type="tel" id="phone" name="phone" [(ngModel)]="registroUsuario.phone" required><br>
+    
+            <label for="firstName">Nombre:</label><br>
+            <input type="text" id="firstName" name="firstName" [(ngModel)]="registroUsuario.firstName" required><br>
+    
+            <label for="lastName">Apellido:</label><br>
+            <input type="text" id="lastName" name="lastName" [(ngModel)]="registroUsuario.lastName" required><br>
+    
+            <label for="address">Dirección:</label><br>
+            <input type="text" id="address" name="address" [(ngModel)]="registroUsuario.address" required><br>
+    
+            <label for="password">Contraseña:</label><br>
+            <input type="password" id="password" name="password" [(ngModel)]="registroUsuario.password" required autocomplete="new-password"><br>
+    
+            <label for="confirmPassword">Confirmar Contraseña:</label><br>
+            <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="registroUsuario.confirmPassword" required autocomplete="new-password"><br>
+    
+           
+            <label for="Patente">Patente:</label><br>
+            <input type="Patente" id="Patente" name="Patente" [(ngModel)]="registroUsuario.patente" required><br>
+    
+            
+    
+            <input type="submit" value="Registrar">
+            
+        </form>
+    
+    </ion-card>
+ </ion-content>

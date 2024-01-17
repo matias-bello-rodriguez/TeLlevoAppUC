@@ -1,0 +1,34 @@
+.custom-card {
+    max-width: 400px; /* Ajusta el ancho máximo de la tarjeta según tus necesidades */
+    margin: auto; /* Centra la tarjeta horizontalmente */
+    margin-top: 20px; /* Añade un margen superior para separar la tarjeta del borde superior */
+  }
+  
+  .custom-item {
+    margin-bottom: 10px; /* Añade espacio entre los elementos de la lista */
+  }
+  
+  .custom-input {
+    width: 100%; /* Haz que los campos de entrada ocupen el 100% del ancho disponible */
+  }
+  
+  .custom-button {
+    margin-top: 20px; /* Añade espacio entre el último campo y el botón */
+  }
+
+  .custom-item {
+    margin-bottom: 15px;
+  }
+  
+  .custom-input {
+    width: 100%;
+    // Establece el ancho deseado para el ion-datetime
+    ion-datetime {
+      width: 100%;
+    }
+  
+    // Establece el alto deseado para el ion-datetime
+    .picker-opt {
+      height: 10px; // Ajusta la altura según tus necesidades
+    }
+  }

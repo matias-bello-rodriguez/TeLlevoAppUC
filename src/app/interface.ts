@@ -6,5 +6,5 @@ export interface RegistroUsuario {
     address: string;
     password: string;
     confirmPassword: string;
-    userType: 'conductor' | 'pasajero';
+    patente: string;
 }

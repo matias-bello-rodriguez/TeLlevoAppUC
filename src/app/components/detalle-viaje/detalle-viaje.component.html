@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Detalle del Viaje</ion-title>
+    <ion-title>Detalle del Viaje a {{viaje.destino}}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cerrarModal()">Cerrar</ion-button>
     </ion-buttons>
@@ -11,20 +11,24 @@
   <ion-list>
     <ion-item>
       <ion-label>Conductor:</ion-label>
-      <ion-text>{{ conductor }}</ion-text>
+      <ion-text>{{ viaje.conductor }}</ion-text>
     </ion-item>
     <ion-item>
       <ion-label>Hora de Salida:</ion-label>
-      <ion-text>{{ horaSalida }}</ion-text>
+      <ion-text>{{ viaje.horaSalida }}</ion-text>
     </ion-item>
     <ion-item>
       <ion-label>Pasajeros:</ion-label>
-      <ion-text>{{ pasajerosActuales }}/{{ pasajerosMaximos }}</ion-text>
+      <ion-text>{{ viaje.pasajerosMaximos }}</ion-text>
     </ion-item>
     <ion-item>
       <ion-label>Tarifa:</ion-label>
-      <ion-text>{{ tarifa }}$</ion-text>
+      <ion-text>{{ viaje.tarifa }}$</ion-text>
     </ion-item>
+
+    
+    
+
   </ion-list>
   <ion-button expand="full" (click)="reservarPasaje()">Reservar pasaje</ion-button>
 </ion-content>

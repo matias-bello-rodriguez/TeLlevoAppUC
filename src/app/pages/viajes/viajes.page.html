@@ -3,38 +3,24 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Viajes en Concepción</ion-title>
+    <ion-title>Reserva un viaje</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-card button (click)="abrirDetalle('Aquiles Baeza','Barrio Universitario', '08:00 AM', 2, 4, 300)">
-      <ion-item>
-        <ion-icon name="car-sport-outline" slot="start"></ion-icon>
-        <ion-label>Barrio Universitario</ion-label>
-      </ion-item>
-    </ion-card>
-
-    <ion-card button (click)="abrirDetalle('Juan Crisostomo','Parque Ecuador ', '09:00 AM', 3, 4, 600)">
-      <ion-item>
-        <ion-icon name="car-sport-outline" slot="start"></ion-icon>
-        <ion-label>Parque Ecuador</ion-label>
-      </ion-item>
-    </ion-card>
-
-    <ion-card button (click)="abrirDetalle('Juan Pablo Astaburuaga','Plaza de la Independencia', '08:00 PM', 1, 3, 250)">
-      <ion-item>
-        <ion-icon name="car-sport-outline" slot="start"></ion-icon>
-        <ion-label>Plaza de la Independencia</ion-label>
-      </ion-item>
-    </ion-card>
-
-    <ion-card button (click)="abrirDetalle('Hyrum Carrasco','Costanera', '01:00 PM', 1, 2, 1050)">
-      <ion-item>
-        <ion-icon name="car-sport-outline" slot="start"></ion-icon>
-        <ion-label>Costanera</ion-label>
-      </ion-item>
+    <ion-card *ngFor="let viaje of viajes | async" (click)="abrirModal(viaje)">
+      <ion-card-header>
+        <ion-card-title>{{ viaje.destino }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Hora de Salida: {{ viaje.horaSalida }}<br>
+        Pasajeros Máximos: {{ viaje.pasajerosMaximos }}<br>
+        Tarifa: {{ viaje.tarifa }}<br>
+        Hora: {{ viaje.horaSalida  }}<br>
+        Patente: {{ viaje.patente }}<br>
+        Conductor: {{ viaje.conductor }}
+      </ion-card-content>
     </ion-card>
   </ion-list>
 </ion-content>

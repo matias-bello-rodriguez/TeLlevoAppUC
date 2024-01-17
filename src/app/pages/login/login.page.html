@@ -24,7 +24,7 @@
     <ion-toolbar>
         <ion-title>Iniciar Sesión</ion-title>
         <ion-buttons slot="start">
-        <ion-back-button default-href="register"></ion-back-button>
+        <ion-back-button default-href="inicio"></ion-back-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -40,8 +40,15 @@
         <input type="password" [(ngModel)]="registroUsuario.password" name="password" placeholder="Contraseña" required>
         <br> <button type="submit">Iniciar Sesión</button>
         <br> <br>
+
+        <br>
+        <ion-row>
+            <ion-col style="color: blue;">
+              <a (click)="olvidasteContrasenaClicked()">¿Olvidaste tu contraseña?</a>
+            </ion-col>
+          </ion-row>
+        
     </form>
 
-    <!-- Botón de regreso -->
-    <a href="javascript:history.back()" class="back-button">Volver</a>
+    
 </body>

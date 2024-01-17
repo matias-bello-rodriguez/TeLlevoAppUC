@@ -1,5 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AlertController, ModalController } from '@ionic/angular';
+import { Viaje } from 'src/app/viaje-interface';
 
 @Component({
   selector: 'app-detalle-viaje',
@@ -7,30 +10,76 @@ import { AlertController, ModalController } from '@ionic/angular';
   styleUrls: ['./detalle-viaje.component.scss'],
 })
 export class NombreDelModalComponent {
+  viaje: Viaje = {
+    destino: '',
+    horaSalida: '',
+    pasajerosMaximos: 0,
+    tarifa: 0,
+    fecha: new Date(),
+    patente: '',
+    conductor: '',
+    email: '',
+    suscriptores: []
+  };
 
-  @Input() conductor: string = "";
-  @Input() horaSalida: string = ""; // Hora de salida del viaje
-  @Input() pasajerosActuales: number = 0; // Cantidad actual de pasajeros
-  @Input() pasajerosMaximos: number = 0; // Cantidad máxima de pasajeros
-  @Input() tarifa: number = 0; // Valor de la tarifa
+  viajeId!: string;
 
-  constructor(private modalController: ModalController, private alertController:AlertController) { }
+  constructor(
+    private modalController: ModalController, 
+    private alertController: AlertController, 
+    private firestore: AngularFirestore,
+    private afAuth: AngularFireAuth
+  ) { }
 
   cerrarModal() {
     this.modalController.dismiss();
   }
 
   async reservarPasaje() {
-    // Lógica para reservar el pasaje
-    console.log('Pasaje reservado para el viaje con salida a las:', this.horaSalida);
+    const user = await this.afAuth.currentUser;
+    const userEmail = user?.email;
 
-    const alert = await this.alertController.create({
-      header: 'Reserva Confirmada',
-      message: 'Viaje reservado exitosamente.',
-      buttons: ['OK']
+    if (!userEmail) {
+      console.error('Error: No hay un usuario autenticado o el email no está disponible.');
+      return;
+    }
+
+    try {
+      await this.suscribirseAViaje(userEmail);
+
+      const alert = await this.alertController.create({
+        header: 'Reserva Confirmada',
+        message: 'Viaje reservado exitosamente.',
+        buttons: ['OK']
+      });
+
+      await alert.present();
+      this.modalController.dismiss();
+    } catch (error) {
+      console.error('Error al reservar el pasaje:', error);
+    }
+  }
+  
+  async suscribirseAViaje(userEmail: string) {
+    const viajeRef = this.firestore.collection('viajes').doc(this.viaje.id);
+  
+    return this.firestore.firestore.runTransaction(async (transaction) => {
+      const viajeDoc = await transaction.get(viajeRef.ref);
+      
+      if (!viajeDoc.exists) {
+        throw new Error('Viaje no encontrado');
+      }
+  
+      const viaje = viajeDoc.data() as Viaje;
+      const suscriptores = viaje.suscriptores || [];
+      if (suscriptores.includes(userEmail)) {
+        console.log('Usuario ya está suscrito a este viaje');
+        return;
+      }
+  
+      transaction.update(viajeRef.ref, {
+        suscriptores: [...suscriptores, userEmail]
+      });
     });
-
-    await alert.present();
-    this.modalController.dismiss(); // Opcional: cierra el modal después de mostrar la alerta
   }
 }

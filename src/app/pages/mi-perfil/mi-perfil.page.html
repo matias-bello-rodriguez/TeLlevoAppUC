@@ -15,27 +15,23 @@
   <ion-list>
     <ion-item>
       <ion-label position="stacked">Email:</ion-label>
-      <ion-input type="email" value="ma.bellor@duocuc.com" readonly></ion-input>
+      <ion-input type="email" [value]="(usuario$ | async)?.email" readonly></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Contraseña:</ion-label>
-      <ion-input type="password" value="contraseña" readonly></ion-input>
-    </ion-item>
-
+    
     <ion-item>
       <ion-label position="stacked">Número de Teléfono:</ion-label>
-      <ion-input type="tel" value="+569 66937212" readonly></ion-input>
+      <ion-input type="tel" [value]="(usuario$ | async)?.phone" readonly></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Dirección:</ion-label>
-      <ion-input type="text" value="Calle Falsa 123, Chile" readonly></ion-input>
+      <ion-input type="text" [value]="(usuario$ | async)?.address" readonly></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Tipo de Usuario:</ion-label>
-      <ion-input type="text" value="Pasajero" readonly></ion-input>
+      <ion-label>Patente:</ion-label>
+      <ion-input type="text" [value]="(usuario$ | async)?.patente" readonly></ion-input>
     </ion-item>
   </ion-list>
 </ion-content>

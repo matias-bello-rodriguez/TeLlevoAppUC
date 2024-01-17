@@ -1,13 +1,40 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Crear un viaje</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-card class="custom-card">
+    <ion-card-content>
+      <ion-item class="custom-item">
+        <ion-label position="floating">¿DÓNDE VIAJAS?</ion-label>
+        <ion-input class="custom-input" [(ngModel)] = "viaje.destino" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label position="floating">Hora</ion-label>
+        <ion-datetime presentation="time" (ionChange)="actualizarHoraSalida($event)" ></ion-datetime>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label position="floating">Asientos Disponibles</ion-label>
+        <ion-input class="custom-input" [(ngModel)] = "viaje.tarifa" required type="number"></ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label position="floating">Tarifa</ion-label>
+        <ion-input class="custom-input" [(ngModel)] = "viaje.pasajerosMaximos" required type="number"></ion-input>
+      </ion-item>
+
+      
+
+      
+
+      <ion-button class="custom-button" expand="full" (click)="realizarCompra()">Crear Viaje</ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

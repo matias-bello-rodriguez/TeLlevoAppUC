@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router'; // Importar Router
 import { AlertController } from '@ionic/angular';
 import { RegistroUsuario } from 'src/app/interface';
+
 
 
 @Component({
@@ -19,12 +22,13 @@ export class RegisterPage {
     address: '',
     password: '',
     confirmPassword: '',
-    userType: 'pasajero', // O 'conductor', según tu lógica de negocio
+    patente: '', // O 'conductor', según tu lógica de negocio
   };
 
   
 
-  constructor(private alertController:AlertController, private router: Router ) { }
+  constructor(private alertController:AlertController, private router: Router,
+    private afAuth: AngularFireAuth, private firestore: AngularFirestore ) { }
   
 
   onSubmit(): void {
@@ -32,6 +36,28 @@ export class RegisterPage {
     console.log('Formulario enviado', this.registroUsuario);
 
     const email = this.registroUsuario.email; // Extrae el email
+    const password = this.registroUsuario.password;
+
+    if (!this.emailValido(email)) {
+      console.error('Error: Formato de email inválido.');
+      this.mostrarAlerta("Por favor, ingresa un email válido.");
+      return; // Detiene la ejecución si el email no es válido
+    }
+
+    if (!this.passwordValida(password)) {
+      console.error('Error: Contraseña inválida.');
+      this.mostrarAlerta("Su contraseña debe contener más de 6 caractéres.");
+      return; // Detiene la ejecución si el email no es válido
+    }
+
+    if (password !== this.registroUsuario.confirmPassword) {
+      console.error('Error: Las contraseñas no coinciden.');
+      this.mostrarAlerta("Las contraseñas ingresadas no coinciden.");
+      return; // Detiene la ejecución si las contraseñas no coinciden
+    }
+    
+
+    
     
     
 
@@ -44,6 +70,7 @@ export class RegisterPage {
       // Si el email no está registrado, procede a almacenar los datos
       localStorage.setItem(email, JSON.stringify(this.registroUsuario));
       this.mostrarAlerta("Usuario registrado con éxito.");
+      this.registerFirebase(email, password);
 
       console.log('Usuario registrado con éxito.');
       this.router.navigateByUrl('/login');
@@ -64,6 +91,63 @@ export class RegisterPage {
   navegarALogin() {
     this.router.navigateByUrl('/login');
   }
+
+
+  registerFirebase(email: string, password: string) {
+    this.afAuth.createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        console.log("hola");
+        this.guardarDatosUsuario(result.user);
+
+
+      })
+      .catch((error) => {
+        // Aquí manejas los errores de Firebase
+        console.error('Error al registrar en Firebase:', error);
+        this.mostrarAlerta("Error en el registro: " + error.message);
+      });
+  }
+
+
+  
+  
+
+  emailValido(email: string): boolean {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
+  }
+
+  passwordValida(password: string): boolean {
+    const minimoSeisCaracteres = password.length >= 6;
+    // Aquí puedes agregar más reglas según tus necesidades
+    return minimoSeisCaracteres;
+  }
+  
+  guardarDatosUsuario(user: any) {
+    const usuarioData = {
+      email: this.registroUsuario.email,
+      password: this.registroUsuario.password,
+      adress: this.registroUsuario.address,
+      phone: this.registroUsuario.phone,
+      firstname: this.registroUsuario.firstName,
+      lastname: this.registroUsuario.lastName,
+      patente: this.registroUsuario.patente
+      // otros datos del registroUsuario...
+    };
+  
+    return this.firestore.collection('usuarios').doc(user.uid).set(usuarioData)
+      .then(() => {
+        console.log('Datos de usuario guardados en Firestore');
+        this.router.navigateByUrl('/login');
+      })
+      .catch(error => {
+        console.error('Error al guardar en Firestore:', error);
+        this.mostrarAlerta("Error al guardar datos: " + error.message);
+      });
+  }
+  
+  
+  
 
 }
 

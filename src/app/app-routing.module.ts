@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
+
 
 const routes: Routes = [
   
@@ -22,22 +24,29 @@ const routes: Routes = [
   },
   {
     path: 'mi-perfil',
-    loadChildren: () => import('./mi-perfil/mi-perfil.module').then( m => m.MiPerfilPageModule)
+    loadChildren: () => import('./pages/mi-perfil/mi-perfil.module').then( m => m.MiPerfilPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'viajes',
-    loadChildren: () => import('./pages/viajes/viajes.module').then( m => m.ViajesPageModule)
+    loadChildren: () => import('./pages/viajes/viajes.module').then( m => m.ViajesPageModule), 
+    canActivate: [AuthGuard]
   },
   {
     path: 'crear-viaje',
-    loadChildren: () => import('./pages/crear-viaje/crear-viaje.module').then( m => m.CrearViajePageModule)
+    loadChildren: () => import('./pages/crear-viaje/crear-viaje.module').then( m => m.CrearViajePageModule), 
+    canActivate: [AuthGuard]
   },
   {
     path: 'viaje-actual',
-    loadChildren: () => import('./pages/viaje-actual/viaje-actual.module').then( m => m.ViajeActualPageModule)
+    loadChildren: () => import('./pages/viaje-actual/viaje-actual.module').then( m => m.ViajeActualPageModule),
+    canActivate: [AuthGuard]
   },
-
-  
+  {
+    path: 'recuperar-contrasena',
+    loadChildren: () => import('./pages/recuperar-contrasena/recuperar-contrasena.module').then( m => m.RecuperarContrasenaPageModule)
+  },
+ 
 ];
 
 @NgModule({

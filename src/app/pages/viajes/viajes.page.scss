@@ -1,27 +1,27 @@
-ion-toolbar{
-    background-color: #000;
-  }
+ion-card {
+  --border-radius: 0px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
 
-  ion-menu-button {
-    --color: black; // Establece el color de las barras del botón del menú a negro
-  }
+  ion-item {
+    --border-radius: 0;
+    --background: transparent;
+    --color: #333;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --min-height: 50px;
 
-  ion-card {
-    --border-radius: 8px; // Ajusta para bordes más cuadrados
-    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra para dar profundidad
-  
-    ion-item {
-      --border-radius: 0; // Elimina el borde redondeado del ion-item interno
-      --background: transparent; // Hace que el fondo del ion-item sea transparente
-      --color: #333; // Color del texto, ajusta según sea necesario
-      --padding-start: 10px; // Ajusta el relleno al inicio del ion-item
-      --padding-end: 10px; // Ajusta el relleno al final del ion-item
-      --min-height: 50px; // Ajusta la altura mínima para hacer que las tarjetas sean más cuadradas
-  
-      ion-icon {
-        --color: #333; // Color del icono, ajusta según sea necesario
-        --size: 24px; // Tamaño del icono, ajusta según sea necesario
-      }
+    ion-icon {
+      --color: #333;
+      --size: 24px;
     }
   }
-  
+}
+
+ion-content {
+  ion-list {
+    ion-card {
+      margin-bottom: 8px; // Ajusta el espacio entre tarjetas
+    }
+  }
+}

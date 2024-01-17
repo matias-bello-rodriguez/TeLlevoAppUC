@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-title>Recupera tu contraseña</ion-title>
+      <ion-buttons slot="start">
+      <ion-back-button default-href="inicio"></ion-back-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form>
+    <ion-item>
+      <ion-label position="floating">Nueva Contraseña</ion-label>
+      <ion-input type="password" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Repita Contraseña</ion-label>
+      <ion-input type="password" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" (click)="actualizarContrasena()">Aceptar</ion-button>
+  </form>
+</ion-content>

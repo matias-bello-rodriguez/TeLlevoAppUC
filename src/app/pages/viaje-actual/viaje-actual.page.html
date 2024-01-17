@@ -3,46 +3,33 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Viajes Actual</ion-title>
+    <ion-title>Viaje Actual</ion-title>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
-
-
-
-  <ion-card>
+  <ion-card *ngFor="let viaje of viajes | async">
     <ion-card-header>
       <ion-icon name="car"></ion-icon> Viaje en Auto
     </ion-card-header>
-  
+
     <ion-card-content>
-      <ion-item>
-        <ion-icon name="calendar"></ion-icon>
-        Fecha del Viaje: 2024-01-11
-      </ion-item>
+   
       
       <ion-item>
         <ion-icon name="time"></ion-icon>
-        Hora del Viaje: 09:00 AM
+        Hora del Viaje: {{ viaje.horaSalida }}
       </ion-item>
   
-      <!-- Agregamos un botón que abrirá el modal -->
-      <ion-item (click)="openPassengerModal()">
+      <ion-item (click)="openPassengerModal()" style="color: brown;">
         <ion-icon name="person"></ion-icon>
-        Cantidad Máxima de Pasajeros: 4 (Click aquí para ver la lista de pasajeros)
+        Cantidad Máxima de Pasajeros: {{ viaje.pasajerosMaximos }} (Click aquí para ver la lista de pasajeros)
       </ion-item>
-  
+
       <ion-item>
         <ion-icon name="pin"></ion-icon>
-        Destino del Viaje: Chiguayante
+        Destino del Viaje: {{ viaje.destino }}
       </ion-item>
-  
-      
     </ion-card-content>
   </ion-card>
 </ion-content>
-
-  
-

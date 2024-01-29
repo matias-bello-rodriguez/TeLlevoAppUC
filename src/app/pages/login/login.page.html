@@ -1,5 +1,6 @@
 
-<head>
+
+<ion-header>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de Sesión</title>
@@ -18,7 +19,7 @@
             background-color: #333;
         }
     </style>
-</head>
+</ion-header>
 
 <ion-header>
     <ion-toolbar>
@@ -30,25 +31,29 @@
 </ion-header>
 
 
-<body>
-   <br>
-    <br>
-    <br>
-    <br>
-    <form (ngSubmit)="iniciarSesion()">
-        <input type="email" [(ngModel)]="registroUsuario.email" name="email" placeholder="Email" required>
-        <input type="password" [(ngModel)]="registroUsuario.password" name="password" placeholder="Contraseña" required>
-        <br> <button type="submit">Iniciar Sesión</button>
-        <br> <br>
 
-        <br>
-        <ion-row>
-            <ion-col style="color: blue;">
-              <a (click)="olvidasteContrasenaClicked()">¿Olvidaste tu contraseña?</a>
-            </ion-col>
-          </ion-row>
-        
-    </form>
-
+   
+    <ion-content class="ion-padding" class="fondoUniversal">
+      <ion-card-header>
     
-</body>
+          <form (ngSubmit)="iniciarSesion()">
+              <input type="email" [(ngModel)]="registroUsuario.email" name="email" placeholder="Email" required>
+              <input type="password" [(ngModel)]="registroUsuario.password" name="password" placeholder="Contraseña" required>
+              <br> <button type="submit">Iniciar Sesión</button>
+              <br> <br>
+
+              <br>
+              <ion-row>
+                  <ion-col style="color: blue;">
+                  <a (click)="olvidasteContrasenaClicked()">¿Olvidaste tu contraseña?</a>
+                  </ion-col>
+              </ion-row>
+
+          </form>
+        </ion-card-header>
+        <div class="img-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqACr7pV6U4sF78QsZ4IH_DzjOpYJXnmjdYg&usqp=CAU">
+          </div>
+</ion-content>
+  
+

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Historial de viajes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let viaje of viajes | async">
+    <ion-card-header>
+      <ion-icon name="car"></ion-icon> Viaje en Auto
+    </ion-card-header>
+
+    <ion-card-content>
+   
+      
+      <ion-item>
+        <ion-icon name="time"></ion-icon>
+        Hora del Viaje: {{ viaje.horaSalida }}
+      </ion-item>
+  
+      <ion-item>
+        <ion-icon name="person"></ion-icon>
+        Pasajeros: {{viaje.pasajerosActuales}}/{{ viaje.pasajerosMaximos }}
+      </ion-item>
+
+
+
+      <ion-item>
+        <ion-icon name="pin"></ion-icon>
+        Destino del Viaje: {{ viaje.destino }}
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="people"></ion-icon>
+        Suscriptores: {{viaje.suscriptores}}
+      </ion-item>
+      
+    
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

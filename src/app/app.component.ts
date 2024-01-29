@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
@@ -13,19 +15,54 @@ interface Page {
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
-  public appPages:Page[] = [
-    { title: 'Reservar viaje', url: '/viajes', icon: 'car' },
-    { title: 'Crear viaje', url: '/crear-viaje', icon: 'bus' },
-    { title: 'Perfil', url: '/mi-perfil', icon: 'person' },
-    { title: 'Viaje actual', url: '/viaje-actual', icon: 'location-sharp-icon' },
-    { title: 'Cerrar sesión', url: '/login', icon: 'log-out-outline', action: 'logout' },
-    // Otros ítems del menú...
-  ];
+export class AppComponent implements OnInit {
+  public appPages: Page[] = [];
 
-  constructor(private router: Router, private alertController:AlertController) {}
+  constructor(
+    private router: Router, 
+    private alertController: AlertController,
+    private afAuth: AngularFireAuth,
+    private firestore: AngularFirestore
+  ) {}
 
-  navigateTo(page:Page) {
+  ngOnInit() {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.obtenerEstadoUsuario(user.uid);
+      } else {
+        // Manejo para usuarios no autenticados o cuando se cierra la sesión
+      }
+    });
+  }
+
+  obtenerEstadoUsuario(uid: string) {
+    this.firestore.collection('usuarios').doc(uid).valueChanges().subscribe((usuario: any) => {
+      if (usuario.estado !== true  || usuario.patente == '0') {
+        // Usuario con estado 'false' o patente '0'
+        this.appPages = [
+
+          { title: 'Viaje actual', url: '/viaje-actual', icon: 'car-sport' },
+          { title: 'Perfil', url: '/mi-perfil', icon: 'person' },
+          { title: 'Historial de viaje', url: '/historial-viajes', icon: 'folder-open-outline' },
+          { title: 'Reservar viaje', url: '/viajes', icon: 'car'},
+          { title: 'Cerrar sesión', url: '/inicio', icon: 'log-out-outline', action: 'logout' },
+
+        ];
+      } else {
+        // Usuario con estado 'true' y patente distinta de '0'
+        this.appPages = [
+          { title: 'Crear viaje', url: '/crear-viaje', icon: 'bus' },
+          { title: 'Viaje actual', url: '/viaje-actual', icon: 'car-sport' },
+          { title: 'Reservar viaje', url: '/viajes', icon: 'car' },
+          { title: 'Perfil', url: '/mi-perfil', icon: 'person' },
+          { title: 'Historial de viaje', url: '/historial-viajes', icon: 'folder-open-outline' },
+          { title: 'Cerrar sesión', url: '/inicio', icon: 'log-out-outline', action: 'logout' }
+        ];
+      }
+    });
+  }
+
+  navigateTo(page: Page) {
     if (page.action === 'logout') {
       this.cerrarSesion();
     } else {
@@ -34,8 +71,8 @@ export class AppComponent {
   }
 
   async cerrarSesion() {
-    // Lógica de cierre de sesión
-    // Aquí va tu lógica para cerrar la sesión...
+    // Implementa aquí la lógica para cerrar sesión
+    // Por ejemplo, desconectar al usuario de Firebase
 
     const alert = await this.alertController.create({
       header: 'Sesión cerrada',
@@ -44,6 +81,6 @@ export class AppComponent {
     });
 
     await alert.present();
-    this.router.navigateByUrl('/inicio');
+    this.router.navigateByUrl('/inicio'); // Redirige al usuario a la página de inicio de sesión
   }
 }

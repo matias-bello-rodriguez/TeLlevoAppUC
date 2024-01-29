@@ -9,15 +9,16 @@
 
 <ion-content>
   <ion-list>
-    <ion-card *ngFor="let viaje of viajes | async" (click)="abrirModal(viaje)">
+    <ion-card *ngFor="let viaje of viajes | async" 
+    (click)="abrirModal(viaje)"
+    [ngClass]="{'card-disponible': viaje.pasajerosMaximos > viaje.pasajerosActuales, 'card-no-disponible': viaje.pasajerosMaximos <= viaje.pasajerosActuales}">
       <ion-card-header>
         <ion-card-title>{{ viaje.destino }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         Hora de Salida: {{ viaje.horaSalida }}<br>
-        Pasajeros Máximos: {{ viaje.pasajerosMaximos }}<br>
+        Asientos Disponibles: {{viaje.pasajerosActuales }}/{{ viaje.pasajerosMaximos}}<br>
         Tarifa: {{ viaje.tarifa }}<br>
-        Hora: {{ viaje.horaSalida  }}<br>
         Patente: {{ viaje.patente }}<br>
         Conductor: {{ viaje.conductor }}
       </ion-card-content>

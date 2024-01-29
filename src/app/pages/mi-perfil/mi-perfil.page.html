@@ -18,7 +18,6 @@
       <ion-input type="email" [value]="(usuario$ | async)?.email" readonly></ion-input>
     </ion-item>
 
-    
     <ion-item>
       <ion-label position="stacked">Número de Teléfono:</ion-label>
       <ion-input type="tel" [value]="(usuario$ | async)?.phone" readonly></ion-input>
@@ -26,12 +25,21 @@
 
     <ion-item>
       <ion-label position="stacked">Dirección:</ion-label>
-      <ion-input type="text" [value]="(usuario$ | async)?.address" readonly></ion-input>
+      <ion-input type="text" [value]="(usuario$ | async)?.adress" readonly></ion-input>
     </ion-item>
 
+    <!-- Solo mostrar la patente si es distinta de '0' -->
+    <ng-container *ngIf="(usuario$ | async)?.patente !== '0'">
+      <ion-item>
+        <ion-label>Patente:</ion-label>
+        <ion-input type="text" [value]="(usuario$ | async)?.patente" readonly></ion-input>
+      </ion-item>
+    </ng-container>
+
     <ion-item>
-      <ion-label>Patente:</ion-label>
-      <ion-input type="text" [value]="(usuario$ | async)?.patente" readonly></ion-input>
+      <ion-label>Tipo de Usuario:</ion-label>
+      <ion-input type="text" [value]="(usuario$ | async)?.patente === '0' ? 'Pasajero' : 'Conductor'" readonly></ion-input>
     </ion-item>
   </ion-list>
+
 </ion-content>

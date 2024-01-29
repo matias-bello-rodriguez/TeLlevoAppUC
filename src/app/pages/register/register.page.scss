@@ -1,10 +1,12 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    background: linear-gradient(45deg, #ff6b6b, #556270);
     margin: 0;
-    padding: 5px; /* Valor de padding reducido aún más */
+    padding: 0;
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 form {
@@ -63,4 +65,8 @@ input[type="radio"] {
 
 .radio-label {
     margin-right: 5px; /* Valor de margin reducido aún más */
+}
+
+.ion-content{
+    background-color: green;
 }

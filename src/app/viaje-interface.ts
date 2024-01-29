@@ -3,12 +3,14 @@ export interface Viaje {
     destino: string;
     horaSalida: string;
     pasajerosMaximos: number;
+    pasajerosActuales: number;
     tarifa: number;
     fecha: Date;
     patente: string;
     conductor: string;
     email: string;
     suscriptores: string[] | null;
+    
 }
 
 

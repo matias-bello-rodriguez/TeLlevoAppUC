@@ -8,28 +8,57 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let viaje of viajes | async">
-    <ion-card-header>
-      <ion-icon name="car"></ion-icon> Viaje en Auto
-    </ion-card-header>
+  <ng-container *ngIf="(viajes | async)?.length; else noViajes">
+    <ion-card *ngFor="let viaje of viajes | async">
+      <ion-card-header>
+        <ion-icon name="car"></ion-icon> Viaje en Auto
+      </ion-card-header>
 
-    <ion-card-content>
-   
-      
-      <ion-item>
-        <ion-icon name="time"></ion-icon>
-        Hora del Viaje: {{ viaje.horaSalida }}
-      </ion-item>
-  
-      <ion-item (click)="openPassengerModal()" style="color: brown;">
-        <ion-icon name="person"></ion-icon>
-        Cantidad Máxima de Pasajeros: {{ viaje.pasajerosMaximos }} (Click aquí para ver la lista de pasajeros)
-      </ion-item>
+      <ion-card-content>
+        <ion-item>
+          <ion-icon name="time"></ion-icon>
+          Hora del Viaje: {{ viaje.horaSalida }}
+        </ion-item>
 
-      <ion-item>
-        <ion-icon name="pin"></ion-icon>
-        Destino del Viaje: {{ viaje.destino }}
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+        <ion-item>
+          <ion-icon name="person"></ion-icon>
+          Pasajeros: {{viaje.pasajerosActuales}}/{{ viaje.pasajerosMaximos }}
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="pin"></ion-icon>
+          Destino del Viaje: {{ viaje.destino }}
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="people"></ion-icon>
+          Suscriptores: {{viaje.suscriptores}}
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="car-sport-outline"></ion-icon>
+          Nombre del conductor: {{viaje.conductor}}
+        </ion-item>
+
+        <ion-button *ngIf="viaje.email === emailUsuarioActual" color="danger" expand="full" (click)="terminarViaje(viaje)">
+          Terminar Viaje
+        </ion-button>
+
+        <ng-container *ngIf="emailUsuarioActual">
+          <ion-button *ngIf="viaje.suscriptores?.includes(emailUsuarioActual)" color="secondary" expand="full" (click)="desuscribirseViaje(viaje)">
+            Desuscribirse del Viaje
+          </ion-button>
+        </ng-container>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <ng-template #noViajes>
+    <div class="no-viajes-container">
+      <ion-img src="/assets/no-viajes.svg"></ion-img>
+      <ion-text color="medium">
+        <h3>No hay ningún viaje activo</h3>
+      </ion-text>
+    </div>
+  </ng-template>
 </ion-content>

@@ -42,9 +42,18 @@
             <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="registroUsuario.confirmPassword" required autocomplete="new-password"><br>
     
            
-            <label for="Patente">Patente:</label><br>
-            <input type="Patente" id="Patente" name="Patente" [(ngModel)]="registroUsuario.patente" required><br>
-    
+            <ion-item>
+                <ion-label position="floating">Patente</ion-label>
+                <ion-input type="text" [(ngModel)]="registroUsuario.patente" name="patente" [disabled]="patenteDisabled"></ion-input>
+              </ion-item>
+        
+              <ion-item>
+                <ion-label>No deseo ingresar una patente</ion-label>
+                <ion-checkbox slot="end" (ionChange)="togglePatente($event)"></ion-checkbox>
+              </ion-item>
+
+
+      
             
     
             <input type="submit" value="Registrar">

@@ -41,3 +41,17 @@ button {
         background-color: #333;
     }
 }
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh; // Esto asegura que el contenedor ocupe el 100% de la altura de la ventana.
+  }
+  
+  .img {
+    max-width: 50%; // Ajusta el ancho máximo de la imagen para que no se desborde del contenedor.
+    max-height: 50%; // Ajusta la altura máxima de la imagen para que no se desborde del contenedor.
+  }
+
+

@@ -1,17 +1,43 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Lista de Pasajeros</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-title>Viaje Actual</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item >
+  <ion-card *ngFor="let viaje of viajes | async">
+    <ion-card-header>
+      <ion-icon name="car"></ion-icon> Viaje en Auto
+    </ion-card-header>
 
-      <!-- Aquí puedes poner más lógica si es necesario -->
-    </ion-item>
-  </ion-list>
+    <ion-card-content>
+   
+      
+      <ion-item>
+        <ion-icon name="time"></ion-icon>
+        Hora del Viaje: {{ viaje.horaSalida }}
+      </ion-item>
+  
+      <ion-item style="color: brown;">
+        <ion-icon name="person"></ion-icon>
+        Cantidad Máxima de Pasajeros: {{ viaje.pasajerosMaximos }} (Click aquí para ver la lista de pasajeros)
+      </ion-item>
+
+
+
+      <ion-item>
+        <ion-icon name="pin"></ion-icon>
+        Destino del Viaje: {{ viaje.destino }}
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="pin"></ion-icon>
+        Suscriptores: {{viaje.suscriptores}}
+      </ion-item>
+      
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -7,4 +7,5 @@ export interface RegistroUsuario {
     password: string;
     confirmPassword: string;
     patente: string;
+    estado: boolean;
 }

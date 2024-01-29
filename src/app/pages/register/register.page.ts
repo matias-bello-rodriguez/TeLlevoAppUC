@@ -22,10 +22,12 @@ export class RegisterPage {
     address: '',
     password: '',
     confirmPassword: '',
-    patente: '', // O 'conductor', según tu lógica de negocio
+    patente: '', 
+    estado: true// O 'conductor', según tu lógica de negocio
   };
 
-  
+  patenteDisabled: boolean = false; // Asegúrate de que esta línea esté presente
+
 
   constructor(private alertController:AlertController, private router: Router,
     private afAuth: AngularFireAuth, private firestore: AngularFirestore ) { }
@@ -58,7 +60,11 @@ export class RegisterPage {
     
 
     
-    
+    if (!this.patenteDisabled && !this.patenteValida(this.registroUsuario.patente)) {
+      console.error('Error: Formato de patente inválido.');
+      this.mostrarAlerta("La patente debe tener 6 caracteres alfanuméricos.");
+      return;
+    }
     
 
     if (localStorage.getItem(email)) {
@@ -76,6 +82,8 @@ export class RegisterPage {
       this.router.navigateByUrl('/login');
      // Aquí podrías redirigir al usuario a otra página o mostrar un mensaje de éxito
     }
+
+
   }
 
   async mostrarAlerta(mensaje: string): Promise<void> {
@@ -122,6 +130,12 @@ export class RegisterPage {
     // Aquí puedes agregar más reglas según tus necesidades
     return minimoSeisCaracteres;
   }
+
+  patenteValida(patente: string): boolean {
+    const patenteRegex = /^[A-Za-z0-9]{6}$/; // Expresión regular para validar la patente
+    return patenteRegex.test(patente);
+  }
+  
   
   guardarDatosUsuario(user: any) {
     const usuarioData = {
@@ -131,7 +145,8 @@ export class RegisterPage {
       phone: this.registroUsuario.phone,
       firstname: this.registroUsuario.firstName,
       lastname: this.registroUsuario.lastName,
-      patente: this.registroUsuario.patente
+      patente: this.registroUsuario.patente,
+      estado: this.registroUsuario.estado
       // otros datos del registroUsuario...
     };
   
@@ -146,6 +161,10 @@ export class RegisterPage {
       });
   }
   
+  togglePatente(event: any) {
+    this.patenteDisabled = event.detail.checked;
+    this.registroUsuario.patente = this.patenteDisabled ? '0' : '';
+  }
   
   
 

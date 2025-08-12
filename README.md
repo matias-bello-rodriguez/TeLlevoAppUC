@@ -46,3 +46,4 @@ FIREBASE_CONFIG={...}
 ionic serve
 ```
    
+*Apoyo de @HyrumDev7*
